@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Ticket Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Movie Ticket Generator</h1>
+        
+        <div class="main-content">
+            <div class="form-container">
+                <h2>Enter Movie Details</h2>
+                <form id="movieForm">
+                    <div class="form-group">
+                        <label for="moviePoster">Movie Poster (URL or Upload):</label>
+                        <input type="text" id="posterUrl" placeholder="Enter poster URL">
+                        <div class="or-divider">OR</div>
+                        <label for="posterFile" class="custom-file-input">
+                            <span class="file-button">Choose File</span>
+                            <span class="file-name" id="fileName">No file selected</span>
+                            <input type="file" id="posterFile" accept="image/*" aria-label="Upload movie poster">
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="englishTitle">English Title:</label>
+                        <input type="text" id="englishTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="thaiTitle">Thai Title:</label>
+                        <input type="text" id="thaiTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="watchDate">Watch Date:</label>
+                        <input type="date" id="watchDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="genres">Movie Genres:</label>
+                        <div class="genre-tags-container">
+                            <div class="available-tags" id="availableTags">
+                                <span class="genre-tag" draggable="true" data-genre="Action">Action</span>
+                                <span class="genre-tag" draggable="true" data-genre="Adventure">Adventure</span>
+                                <span class="genre-tag" draggable="true" data-genre="Animation">Animation</span>
+                                <span class="genre-tag" draggable="true" data-genre="Comedy">Comedy</span>
+                                <span class="genre-tag" draggable="true" data-genre="Crime">Crime</span>
+                                <span class="genre-tag" draggable="true" data-genre="Detective">Detective</span>
+                                <span class="genre-tag" draggable="true" data-genre="Documentary">Documentary</span>
+                                <span class="genre-tag" draggable="true" data-genre="Drama">Drama</span>
+                                <span class="genre-tag" draggable="true" data-genre="Family">Family</span>
+                                <span class="genre-tag" draggable="true" data-genre="Fantasy">Fantasy</span>
+                                <span class="genre-tag" draggable="true" data-genre="Horror">Horror</span>
+                                <span class="genre-tag" draggable="true" data-genre="Mystery">Mystery</span>
+                                <span class="genre-tag" draggable="true" data-genre="Murder">Murder</span>
+                                <span class="genre-tag" draggable="true" data-genre="Romance">Romance</span>
+                                <span class="genre-tag" draggable="true" data-genre="Sci-Fi">Sci-Fi</span>
+                                <span class="genre-tag" draggable="true" data-genre="Thriller">Thriller</span>
+                                <span class="genre-tag" draggable="true" data-genre="War">War</span>
+                            </div>
+                            <div class="selected-genres" id="selectedGenres" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                <input type="text" id="genres" placeholder="Drag and drop genres here" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="country">Production Country:</label>
+                        <div class="custom-select">
+                            <select id="country" required>
+                                <option value="" disabled selected>Select a country</option>
+                                <option value="China">China</option>
+                                <option value="English">English</option>
+                                <option value="India">India</option>
+                                <option value="Japan">Japan</option>
+                                <option value="Korea">Korea</option>
+                                <option value="Thai">Thai</option>
+                            </select>
+                            <span class="select-arrow"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cinemaName">Cinema Name:</label>
+                        <input type="text" id="cinemaName" value="MOVIE SLIP" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="displayMovieCode">Movie Code:</label>
+                        <input type="text" id="displayMovieCode" readonly placeholder="Will be generated automatically">
+                    </div>
+                    
+                    <button type="button" id="generateBtn">Generate Ticket</button>
+                </form>
+            </div>
+            
+            <div class="ticket-container" id="ticketContainer">
+                <h2>Your Movie Ticket</h2>
+                <div id="ticket" class="ticket vertical-ticket">
+                    <div class="ticket-header">
+                        <div class="cinema-logo" id="cinemaLogo">
+                            <!-- Logo will be generated here -->
+                        </div>
+                        <div class="cinema-name" id="ticketCinemaName">MOVIE SLIP</div>
+                    </div>
+                    <div class="ticket-divider"></div>
+                    <div class="ticket-content">
+                        <div class="ticket-poster">
+                            <img id="ticketPoster" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='225' viewBox='0 0 150 225'%3E%3Crect width='150' height='225' fill='%23f0f0f0'/%3E%3Ctext x='75' y='112.5' font-family='Arial' font-size='24' fill='%23999' text-anchor='middle' dominant-baseline='middle'%3EN/A%3C/text%3E%3C/svg%3E" alt="Movie Poster">
+                        </div>
+                        <div class="ticket-details">
+                            <h3 id="ticketEnglishTitle">Movie Title</h3>
+                            <h4 id="ticketThaiTitle">ชื่อภาพยนตร์</h4>
+                            <div class="ticket-tags" id="ticketGenres"></div>
+                        </div>
+                    </div>
+                    <div class="ticket-divider"></div>
+                    <div class="ticket-footer">
+                        <div class="ticket-info">
+                            <p>Date: <span id="ticketDate">DD/MM/YYYY</span></p>
+                            <p>Code: <span id="ticketCode">000000</span></p>
+                            <p class="ticket-country">Country: <span id="ticketCountry">Country</span></p>
+                        </div>
+                        <div class="ticket-qr" id="ticketQR"></div>
+                    </div>
+                    <div class="ticket-stub"></div>
+                </div>
+                <button id="downloadBtn" style="display:none;">Download Ticket</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
