@@ -1,3 +1,3 @@
 # Vibe Ticket Collection
 
-Ticket Collection helps you organize and display your favorite movie tickets in one place. Create a digital archive of your cinema experiences with customizable options for movie titles, dates, theaters, and personal notes.
+Vibe Ticket Collection lets you organize and showcase your favorite movie tickets in a digital archive. Easily log movie titles, dates, theaters, and personal notes—preserving your cinema memories with customizable, neat, and accessible records.
